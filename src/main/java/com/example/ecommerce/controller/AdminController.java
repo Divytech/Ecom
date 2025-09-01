@@ -72,14 +72,13 @@ public class AdminController {
     }
 
     @GetMapping("/product/edit/{id}")
-    public String editProduct(@PathVariable Long id, Model model) {
+    public String editProduct(@PathVariable String id, Model model) {
         Product product = productRepository.findById(id).orElse(null);
         model.addAttribute("product", product);
         return "add-product";
     }
 
-    @GetMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+        public String deleteProduct(@PathVariable String id) {
         productRepository.deleteById(id);
         return "redirect:/admin/dashboard";
     }

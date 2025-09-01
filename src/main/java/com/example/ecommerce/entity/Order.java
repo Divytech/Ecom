@@ -1,22 +1,17 @@
 package com.example.ecommerce.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-
-@Table(name= "orders")
-
+@Document(collection = "orders")
 public class Order {
 
-
     @Id
-    @GeneratedValue
-
-    private Long id;
+    private String id;
 
     private String userEmail;
 
@@ -24,15 +19,13 @@ public class Order {
 
     private double totalAmount;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+        private List<OrderItem> items = new ArrayList<>();
 
-    private List<OrderItem> items = new ArrayList<>();
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

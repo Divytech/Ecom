@@ -45,14 +45,14 @@ public class UserController {
     }
 
     @GetMapping("/add-to-cart/{id}")
-    public String addToCart(@PathVariable Long id, @ModelAttribute("cart") List<Product> cart,
+    public String addToCart(@PathVariable String id, @ModelAttribute("cart") List<Product> cart,
                             HttpSession session,
                             RedirectAttributes redirectAttributes) {
         Product product = productRepository.findById(id).orElse(null);
 
         if (product != null) {
 // Get or initialize a temporary stock map in session
-            Map<Long, Integer> reservedStock = (Map<Long, Integer>) session.getAttribute("reservedStock");
+            Map<String, Integer> reservedStock = (Map<String, Integer>) session.getAttribute("reservedStock");
             if (reservedStock == null) {
                 reservedStock = new HashMap<>();
             }
@@ -92,12 +92,12 @@ public class UserController {
             Product removedProduct = cart.remove(index);
 
 // Restore reserved stock in session
-            Map<Long, Integer> reservedStock = (Map<Long, Integer>) session.getAttribute("reservedStock");
+            Map<String, Integer> reservedStock = (Map<String, Integer>) session.getAttribute("reservedStock");
             if (reservedStock == null) {
                 reservedStock = new HashMap<>();
             }
 
-            Long productId = removedProduct.getId();
+            String productId = removedProduct.getId();
             int reservedQty = reservedStock.getOrDefault(productId, 0);
 
             if (reservedQty > 0) {
@@ -143,7 +143,6 @@ public class UserController {
             item.setProduct(dbProduct);
             item.setPrice(dbProduct.getPrice());
             item.setQuantity(1); // for now, quantity = 1
-            item.setOrder(order);
             total += dbProduct.getPrice();
             order.getItems().add(item);
         }
