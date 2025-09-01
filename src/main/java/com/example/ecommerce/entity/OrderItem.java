@@ -1,22 +1,15 @@
 package com.example.ecommerce.entity;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
+public class OrderItem {
 
-public class OrderItem{
-
-@ManyToOne
-
-private Product product;
-
-private int quantity;
-
-private  String name;
-
-private double price;
-
-private String imageName;
-
-    
+    @DBRef
+    private Product product;
+    private int quantity;
+    private String name;
+    private double price;
+    private String imageName;
 
     public Product getProduct() {
         return product;
@@ -59,15 +52,13 @@ private String imageName;
     }
 
     @Override
-    public String toString() {
-        return "OrderItem{" +
-                "id=" + id +
-                ", order=" + order +
-                ", product=" + product +
-                ", quantity=" + quantity +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", imageName='" + imageName + '\'' +
-                '}';
-    }
+public String toString() {
+    return "OrderItem{"
+            + "product=" + product + ","
+            + "quantity=" + quantity + ","
+            + "name='" + name + "'",
+            + "price=" + price + ","
+            + "imageName='" + imageName + "'"
+            + "}";
+}
 }
